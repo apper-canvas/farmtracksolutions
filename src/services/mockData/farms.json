@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "name": "Green Valley Farm",
+    "location": "Sacramento, CA",
+    "size": 45,
+    "sizeUnit": "acres",
+    "farmType": "Mixed Crops",
+    "createdAt": "2024-01-15T08:00:00Z"
+  },
+  {
+    "Id": 2,
+    "name": "Sunny Meadows",
+    "location": "Fresno, CA",
+    "size": 120,
+    "sizeUnit": "acres",
+    "farmType": "Vegetable",
+    "createdAt": "2024-02-20T10:30:00Z"
+  }
+]

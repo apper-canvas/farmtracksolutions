@@ -1,0 +1,82 @@
+[
+  {
+    "Id": 1,
+    "farmId": 1,
+    "type": "expense",
+    "amount": 450.00,
+    "category": "Seeds",
+    "description": "Tomato seeds - Roma variety",
+    "date": "2024-03-10",
+    "createdAt": "2024-03-10T10:00:00Z"
+  },
+  {
+    "Id": 2,
+    "farmId": 1,
+    "type": "expense",
+    "amount": 1200.00,
+    "category": "Equipment",
+    "description": "Drip irrigation system for Field A",
+    "date": "2024-03-12",
+    "createdAt": "2024-03-12T14:30:00Z"
+  },
+  {
+    "Id": 3,
+    "farmId": 1,
+    "type": "income",
+    "amount": 3500.00,
+    "category": "Sales",
+    "description": "Carrot harvest sale to local market",
+    "date": "2024-04-18",
+    "createdAt": "2024-04-18T16:00:00Z"
+  },
+  {
+    "Id": 4,
+    "farmId": 1,
+    "type": "expense",
+    "amount": 280.00,
+    "category": "Fertilizer",
+    "description": "Organic fertilizer for lettuce crop",
+    "date": "2024-04-02",
+    "createdAt": "2024-04-02T09:15:00Z"
+  },
+  {
+    "Id": 5,
+    "farmId": 1,
+    "type": "expense",
+    "amount": 650.00,
+    "category": "Labor",
+    "description": "Seasonal workers for planting",
+    "date": "2024-03-20",
+    "createdAt": "2024-03-20T11:00:00Z"
+  },
+  {
+    "Id": 6,
+    "farmId": 1,
+    "type": "income",
+    "amount": 2800.00,
+    "category": "Sales",
+    "description": "Tomato harvest - early season batch",
+    "date": "2024-05-15",
+    "createdAt": "2024-05-15T15:30:00Z"
+  },
+  {
+    "Id": 7,
+    "farmId": 1,
+    "type": "expense",
+    "amount": 180.00,
+    "category": "Utilities",
+    "description": "Water bill for irrigation",
+    "date": "2024-04-30",
+    "createdAt": "2024-04-30T12:00:00Z"
+  },
+  {
+    "Id": 8,
+    "farmId": 2,
+    "type": "expense",
+    "amount": 890.00,
+    "category": "Seeds",
+    "description": "Potato seed stock - Russet variety",
+    "date": "2024-02-25",
+    "createdAt": "2024-02-25T10:30:00Z"
+  }
+]

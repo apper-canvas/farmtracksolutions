@@ -1,0 +1,74 @@
+[
+  {
+    "Id": 1,
+    "farmId": 1,
+    "cropId": 1,
+    "title": "Water tomato plants",
+    "description": "Check drip irrigation system and water if needed",
+    "dueDate": "2024-12-28",
+    "priority": "high",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-12-20T08:00:00Z"
+  },
+  {
+    "Id": 2,
+    "farmId": 1,
+    "cropId": 2,
+    "title": "Harvest corn",
+    "description": "Corn is ready for harvest. Bring equipment to Field B",
+    "dueDate": "2024-12-27",
+    "priority": "high",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-12-18T07:00:00Z"
+  },
+  {
+    "Id": 3,
+    "farmId": 1,
+    "cropId": 3,
+    "title": "Apply fertilizer to lettuce",
+    "description": "Use organic fertilizer for lettuce in Field C",
+    "dueDate": "2024-12-29",
+    "priority": "medium",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-12-15T10:00:00Z"
+  },
+  {
+    "Id": 4,
+    "farmId": 1,
+    "cropId": 1,
+    "title": "Check for pests",
+    "description": "Inspect tomato plants for aphids and other pests",
+    "dueDate": "2024-12-30",
+    "priority": "medium",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-12-22T09:00:00Z"
+  },
+  {
+    "Id": 5,
+    "farmId": 1,
+    "cropId": 4,
+    "title": "Clean Field D",
+    "description": "Remove old carrot plants and prepare for next planting",
+    "dueDate": "2024-12-26",
+    "priority": "low",
+    "completed": true,
+    "completedAt": "2024-12-25T14:30:00Z",
+    "createdAt": "2024-12-20T11:00:00Z"
+  },
+  {
+    "Id": 6,
+    "farmId": 2,
+    "cropId": 5,
+    "title": "Check potato growth",
+    "description": "Monitor potato plant development in North Plot",
+    "dueDate": "2024-12-31",
+    "priority": "low",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-12-19T08:30:00Z"
+  }
+]
