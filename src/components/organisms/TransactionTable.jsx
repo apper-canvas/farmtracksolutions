@@ -41,34 +41,34 @@ const TransactionTable = ({ transactions, onEdit, onDelete }) => {
                 className="hover:bg-gray-50 transition-colors duration-150"
               >
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {format(new Date(transaction.date), "MMM dd, yyyy")}
+{format(new Date(transaction.date_c), "MMM dd, yyyy")}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={cn(
                     "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold",
-                    transaction.type === "income"
+transaction.type_c === "income"
                       ? "bg-gradient-to-r from-green-50 to-green-100 text-green-700 border border-green-200"
                       : "bg-gradient-to-r from-red-50 to-red-100 text-red-700 border border-red-200"
                   )}>
                     <ApperIcon 
-                      name={transaction.type === "income" ? "TrendingUp" : "TrendingDown"} 
+                      name={transaction.type_c === "income" ? "TrendingUp" : "TrendingDown"} 
                       className="w-3 h-3 mr-1"
                     />
-                    {transaction.type}
+                    {transaction.type_c}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {transaction.category}
+{transaction.category_c}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">
-                  {transaction.description}
+{transaction.description_c}
                 </td>
                 <td className={cn(
                   "px-6 py-4 whitespace-nowrap text-right text-base font-bold",
-                  transaction.type === "income" ? "text-success" : "text-error"
+transaction.type_c === "income" ? "text-success" : "text-error"
                 )}>
-                  {transaction.type === "income" ? "+" : "-"}
-                  ${transaction.amount.toFixed(2)}
+                  {transaction.type_c === "income" ? "+" : "-"}
+                  ${transaction.amount_c.toFixed(2)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
                   <div className="flex items-center justify-end space-x-2">

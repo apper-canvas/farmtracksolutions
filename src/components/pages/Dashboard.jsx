@@ -53,25 +53,24 @@ const Dashboard = () => {
   if (loading) return <Loading count={4} />;
   if (error) return <Error message={error} onRetry={loadDashboardData} />;
 
-  const activeCrops = crops.filter(c => c.status === "growing" || c.status === "planted").length;
-  const pendingTasks = tasks.filter(t => !t.completed).length;
+const activeCrops = crops.filter(c => c.status_c === "growing" || c.status_c === "planted").length;
+  const pendingTasks = tasks.filter(t => !t.completed_c).length;
   
   const thisMonthTransactions = transactions.filter(t => 
-    isThisMonth(new Date(t.date))
+    isThisMonth(new Date(t.date_c))
   );
   const monthExpenses = thisMonthTransactions
-    .filter(t => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0);
+    .filter(t => t.type_c === "expense")
+    .reduce((sum, t) => sum + t.amount_c, 0);
   const monthIncome = thisMonthTransactions
-    .filter(t => t.type === "income")
-    .reduce((sum, t) => sum + t.amount, 0);
+    .filter(t => t.type_c === "income")
+    .reduce((sum, t) => sum + t.amount_c, 0);
 
   const recentTransactions = transactions.slice(0, 5);
   const upcomingTasks = tasks
-    .filter(t => !t.completed)
-    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+    .filter(t => !t.completed_c)
+    .sort((a, b) => new Date(a.duedate_c) - new Date(b.duedate_c))
     .slice(0, 5);
-
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
@@ -140,7 +139,7 @@ const Dashboard = () => {
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {upcomingTasks.map(task => (
+{upcomingTasks.map(task => (
                     <div
                       key={task.Id}
                       className="flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 transition-all duration-200"
@@ -148,20 +147,20 @@ const Dashboard = () => {
                       <div className="flex items-center space-x-3">
                         <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-primary-light"></div>
                         <div>
-                          <p className="font-semibold text-gray-900">{task.title}</p>
+                          <p className="font-semibold text-gray-900">{task.title_c}</p>
                           <p className="text-sm text-gray-600">
-                            Due: {format(new Date(task.dueDate), "MMM dd, yyyy")}
+                            Due: {format(new Date(task.duedate_c), "MMM dd, yyyy")}
                           </p>
                         </div>
                       </div>
                       <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        task.priority === "high" 
+                        task.priority_c === "high" 
                           ? "bg-red-100 text-red-700" 
-                          : task.priority === "medium"
+                          : task.priority_c === "medium"
                           ? "bg-amber-100 text-amber-700"
                           : "bg-green-100 text-green-700"
                       }`}>
-                        {task.priority}
+                        {task.priority_c}
                       </span>
                     </div>
                   ))}
@@ -188,33 +187,33 @@ const Dashboard = () => {
               </div>
               
               <div className="space-y-3">
-                {recentTransactions.map(transaction => (
+{recentTransactions.map(transaction => (
                   <div
                     key={transaction.Id}
                     className="flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 transition-all duration-200"
                   >
                     <div className="flex items-center space-x-3">
                       <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        transaction.type === "income"
+                        transaction.type_c === "income"
                           ? "bg-gradient-to-br from-green-50 to-green-100"
                           : "bg-gradient-to-br from-red-50 to-red-100"
                       }`}>
                         <ApperIcon 
-                          name={transaction.type === "income" ? "TrendingUp" : "TrendingDown"}
-                          className={transaction.type === "income" ? "text-green-600" : "text-red-600"}
+                          name={transaction.type_c === "income" ? "TrendingUp" : "TrendingDown"}
+                          className={transaction.type_c === "income" ? "text-green-600" : "text-red-600"}
                         />
                       </div>
                       <div>
-                        <p className="font-semibold text-gray-900">{transaction.category}</p>
+                        <p className="font-semibold text-gray-900">{transaction.category_c}</p>
                         <p className="text-sm text-gray-600">
-                          {format(new Date(transaction.date), "MMM dd, yyyy")}
+                          {format(new Date(transaction.date_c), "MMM dd, yyyy")}
                         </p>
                       </div>
                     </div>
                     <span className={`text-lg font-bold ${
-                      transaction.type === "income" ? "text-success" : "text-error"
+                      transaction.type_c === "income" ? "text-success" : "text-error"
                     }`}>
-                      {transaction.type === "income" ? "+" : "-"}${transaction.amount.toFixed(2)}
+                      {transaction.type_c === "income" ? "+" : "-"}${transaction.amount_c.toFixed(2)}
                     </span>
                   </div>
                 ))}

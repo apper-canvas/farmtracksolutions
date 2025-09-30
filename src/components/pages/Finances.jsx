@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
+import Select from "@/components/atoms/Select";
 import Card from "@/components/atoms/Card";
-import Modal from "@/components/molecules/Modal";
-import FormField from "@/components/molecules/FormField";
-import SelectField from "@/components/molecules/SelectField";
 import TransactionTable from "@/components/organisms/TransactionTable";
-import Loading from "@/components/ui/Loading";
+import Modal from "@/components/molecules/Modal";
+import SelectField from "@/components/molecules/SelectField";
+import FormField from "@/components/molecules/FormField";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
 import transactionService from "@/services/api/transactionService";
 
 const Finances = () => {
@@ -21,13 +22,13 @@ const Finances = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [filterType, setFilterType] = useState("all");
-  const [formData, setFormData] = useState({
-    farmId: 1,
-    type: "expense",
-    amount: "",
-    category: "",
-    description: "",
-    date: format(new Date(), "yyyy-MM-dd")
+const [formData, setFormData] = useState({
+    farm_c: 1,
+    type_c: "expense",
+    amount_c: "",
+    category_c: "",
+    description_c: "",
+    date_c: format(new Date(), "yyyy-MM-dd")
   });
 
   const loadTransactions = async () => {
@@ -49,10 +50,10 @@ const Finances = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
+try {
       const transactionData = {
         ...formData,
-        amount: parseFloat(formData.amount)
+        amount_c: parseFloat(formData.amount_c)
       };
 
       if (editingTransaction) {
@@ -70,15 +71,15 @@ const Finances = () => {
     }
   };
 
-  const handleEdit = (transaction) => {
+const handleEdit = (transaction) => {
     setEditingTransaction(transaction);
     setFormData({
-      farmId: transaction.farmId,
-      type: transaction.type,
-      amount: transaction.amount.toString(),
-      category: transaction.category,
-      description: transaction.description,
-      date: transaction.date
+      farm_c: transaction.farm_c?.Id || transaction.farm_c || 1,
+      type_c: transaction.type_c,
+      amount_c: transaction.amount_c.toString(),
+      category_c: transaction.category_c,
+      description_c: transaction.description_c,
+      date_c: transaction.date_c
     });
     setIsModalOpen(true);
   };
@@ -96,36 +97,35 @@ const Finances = () => {
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+setIsModalOpen(false);
     setEditingTransaction(null);
     setFormData({
-      farmId: 1,
-      type: "expense",
-      amount: "",
-      category: "",
-      description: "",
-      date: format(new Date(), "yyyy-MM-dd")
+      farm_c: 1,
+      type_c: "expense",
+      amount_c: "",
+      category_c: "",
+      description_c: "",
+      date_c: format(new Date(), "yyyy-MM-dd")
     });
   };
 
   if (loading) return <Loading count={3} />;
   if (error) return <Error message={error} onRetry={loadTransactions} />;
 
-  const filteredTransactions = filterType === "all"
+const filteredTransactions = filterType === "all"
     ? transactions
-    : transactions.filter(t => t.type === filterType);
-
-  const sortedTransactions = [...filteredTransactions].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
+    : transactions.filter(t => t.type_c === filterType);
+const sortedTransactions = [...filteredTransactions].sort(
+    (a, b) => new Date(b.date_c) - new Date(a.date_c)
   );
 
-  const totalIncome = transactions
-    .filter(t => t.type === "income")
-    .reduce((sum, t) => sum + t.amount, 0);
+const totalIncome = transactions
+    .filter(t => t.type_c === "income")
+    .reduce((sum, t) => sum + t.amount_c, 0);
 
-  const totalExpenses = transactions
-    .filter(t => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0);
+const totalExpenses = transactions
+    .filter(t => t.type_c === "expense")
+    .reduce((sum, t) => sum + t.amount_c, 0);
 
   const netBalance = totalIncome - totalExpenses;
 
@@ -263,8 +263,8 @@ const Finances = () => {
           <div className="flex gap-3">
             <Button
               type="button"
-              variant={formData.type === "expense" ? "primary" : "outline"}
-              onClick={() => setFormData({ ...formData, type: "expense", category: "" })}
+variant={formData.type_c === "expense" ? "primary" : "outline"}
+              onClick={() => setFormData({ ...formData, type_c: "expense", category_c: "" })}
               className="flex-1"
             >
               <ApperIcon name="TrendingDown" className="w-4 h-4 mr-2" />
@@ -272,8 +272,8 @@ const Finances = () => {
             </Button>
             <Button
               type="button"
-              variant={formData.type === "income" ? "primary" : "outline"}
-              onClick={() => setFormData({ ...formData, type: "income", category: "" })}
+              variant={formData.type_c === "income" ? "primary" : "outline"}
+              onClick={() => setFormData({ ...formData, type_c: "income", category_c: "" })}
               className="flex-1"
             >
               <ApperIcon name="TrendingUp" className="w-4 h-4 mr-2" />
@@ -287,18 +287,18 @@ const Finances = () => {
               type="number"
               step="0.01"
               required
-              value={formData.amount}
-              onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+              value={formData.amount_c}
+              onChange={(e) => setFormData({ ...formData, amount_c: e.target.value })}
               placeholder="0.00"
             />
             <SelectField
               label="Category"
               required
-              value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              value={formData.category_c}
+              onChange={(e) => setFormData({ ...formData, category_c: e.target.value })}
             >
               <option value="">Select category</option>
-              {(formData.type === "expense" ? expenseCategories : incomeCategories).map(cat => (
+              {(formData.type_c === "expense" ? expenseCategories : incomeCategories).map(cat => (
                 <option key={cat} value={cat}>{cat}</option>
               ))}
             </SelectField>
@@ -308,8 +308,8 @@ const Finances = () => {
             label="Date"
             type="date"
             required
-            value={formData.date}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+            value={formData.date_c}
+            onChange={(e) => setFormData({ ...formData, date_c: e.target.value })}
           />
 
           <div>
@@ -317,8 +317,8 @@ const Finances = () => {
               Description
             </label>
             <textarea
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              value={formData.description_c}
+              onChange={(e) => setFormData({ ...formData, description_c: e.target.value })}
               rows={3}
               className="w-full px-4 py-2.5 text-base bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-gray-400"
               placeholder="Add transaction details..."

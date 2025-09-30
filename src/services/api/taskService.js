@@ -1,68 +1,279 @@
-import tasksData from "@/services/mockData/tasks.json";
-
-let tasks = [...tasksData];
-
-const delay = () => new Promise(resolve => setTimeout(resolve, 300));
+import { toast } from "react-toastify";
 
 const taskService = {
   async getAll() {
-    await delay();
-    return [...tasks];
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      const params = {
+        fields: [
+          { field: { Name: "title_c" } },
+          { field: { Name: "description_c" } },
+          { field: { Name: "duedate_c" } },
+          { field: { Name: "priority_c" } },
+          { field: { Name: "completed_c" } },
+          { field: { Name: "completedat_c" } },
+          { field: { Name: "farm_c" }, referenceField: { field: { Name: "name_c" } } },
+          { field: { Name: "crop_c" }, referenceField: { field: { Name: "name_c" } } }
+        ],
+        orderBy: [{ fieldName: "Id", sorttype: "DESC" }]
+      };
+
+      const response = await apperClient.fetchRecords("task_c", params);
+
+      if (!response.success) {
+        console.info(`apper_info: An error was received in fetchRecords for task_c. The response body is: ${JSON.stringify(response)}.`);
+        toast.error(response.message);
+        return [];
+      }
+
+      return response.data || [];
+    } catch (error) {
+      console.info(`apper_info: An error occurred in taskService.getAll(). The error is: ${error.message}`);
+      toast.error("Failed to load tasks");
+      return [];
+    }
   },
 
   async getById(id) {
-    await delay();
-    return tasks.find(task => task.Id === parseInt(id));
-  },
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
 
-  async getByFarmId(farmId) {
-    await delay();
-    return tasks.filter(task => task.farmId === parseInt(farmId));
+      const params = {
+        fields: [
+          { field: { Name: "title_c" } },
+          { field: { Name: "description_c" } },
+          { field: { Name: "duedate_c" } },
+          { field: { Name: "priority_c" } },
+          { field: { Name: "completed_c" } },
+          { field: { Name: "completedat_c" } },
+          { field: { Name: "farm_c" }, referenceField: { field: { Name: "name_c" } } },
+          { field: { Name: "crop_c" }, referenceField: { field: { Name: "name_c" } } }
+        ]
+      };
+
+      const response = await apperClient.getRecordById("task_c", parseInt(id), params);
+
+      if (!response.success) {
+        console.info(`apper_info: An error was received in getRecordById for task_c. The response body is: ${JSON.stringify(response)}.`);
+        toast.error(response.message);
+        return null;
+      }
+
+      return response.data || null;
+    } catch (error) {
+      console.info(`apper_info: An error occurred in taskService.getById(${id}). The error is: ${error.message}`);
+      toast.error("Failed to load task details");
+      return null;
+    }
   },
 
   async create(taskData) {
-    await delay();
-    const maxId = tasks.length > 0 ? Math.max(...tasks.map(t => t.Id)) : 0;
-    const newTask = {
-      ...taskData,
-      Id: maxId + 1,
-      completed: false,
-      completedAt: null,
-      createdAt: new Date().toISOString()
-    };
-    tasks.push(newTask);
-    return { ...newTask };
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      const payload = {
+        records: [{
+          title_c: taskData.title_c,
+          description_c: taskData.description_c || "",
+          duedate_c: taskData.duedate_c,
+          priority_c: taskData.priority_c,
+          farm_c: parseInt(taskData.farm_c),
+          ...(taskData.crop_c && { crop_c: parseInt(taskData.crop_c) })
+        }]
+      };
+
+      const response = await apperClient.createRecord("task_c", payload);
+
+      if (!response.success) {
+        console.info(`apper_info: An error was received in createRecord for task_c. The response body is: ${JSON.stringify(response)}.`);
+        toast.error(response.message);
+        return null;
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+
+        if (failed.length > 0) {
+          console.info(`apper_info: Failed to create ${failed.length} tasks. Failed records: ${JSON.stringify(failed)}`);
+          failed.forEach(record => {
+            if (record.errors) {
+              record.errors.forEach(error => toast.error(`${error.fieldLabel}: ${error.message}`));
+            }
+            if (record.message) toast.error(record.message);
+          });
+        }
+
+        return successful.length > 0 ? successful[0].data : null;
+      }
+
+      return null;
+    } catch (error) {
+      console.info(`apper_info: An error occurred in taskService.create(). The error is: ${error.message}`);
+      toast.error("Failed to create task");
+      return null;
+    }
   },
 
   async update(id, taskData) {
-    await delay();
-    const index = tasks.findIndex(task => task.Id === parseInt(id));
-    if (index !== -1) {
-      tasks[index] = { ...tasks[index], ...taskData };
-      return { ...tasks[index] };
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      const payload = {
+        records: [{
+          Id: parseInt(id),
+          title_c: taskData.title_c,
+          description_c: taskData.description_c || "",
+          duedate_c: taskData.duedate_c,
+          priority_c: taskData.priority_c,
+          farm_c: parseInt(taskData.farm_c),
+          ...(taskData.crop_c && { crop_c: parseInt(taskData.crop_c) })
+        }]
+      };
+
+      const response = await apperClient.updateRecord("task_c", payload);
+
+      if (!response.success) {
+        console.info(`apper_info: An error was received in updateRecord for task_c. The response body is: ${JSON.stringify(response)}.`);
+        toast.error(response.message);
+        return null;
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+
+        if (failed.length > 0) {
+          console.info(`apper_info: Failed to update ${failed.length} tasks. Failed records: ${JSON.stringify(failed)}`);
+          failed.forEach(record => {
+            if (record.errors) {
+              record.errors.forEach(error => toast.error(`${error.fieldLabel}: ${error.message}`));
+            }
+            if (record.message) toast.error(record.message);
+          });
+        }
+
+        return successful.length > 0 ? successful[0].data : null;
+      }
+
+      return null;
+    } catch (error) {
+      console.info(`apper_info: An error occurred in taskService.update(${id}). The error is: ${error.message}`);
+      toast.error("Failed to update task");
+      return null;
     }
-    throw new Error("Task not found");
   },
 
   async toggleComplete(id) {
-    await delay();
-    const index = tasks.findIndex(task => task.Id === parseInt(id));
-    if (index !== -1) {
-      tasks[index].completed = !tasks[index].completed;
-      tasks[index].completedAt = tasks[index].completed ? new Date().toISOString() : null;
-      return { ...tasks[index] };
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      const taskResponse = await this.getById(id);
+      if (!taskResponse) {
+        toast.error("Task not found");
+        return null;
+      }
+
+      const newCompletedStatus = !taskResponse.completed_c;
+      const payload = {
+        records: [{
+          Id: parseInt(id),
+          completed_c: newCompletedStatus,
+          completedat_c: newCompletedStatus ? new Date().toISOString() : null
+        }]
+      };
+
+      const response = await apperClient.updateRecord("task_c", payload);
+
+      if (!response.success) {
+        console.info(`apper_info: An error was received in toggleComplete for task_c. The response body is: ${JSON.stringify(response)}.`);
+        toast.error(response.message);
+        return null;
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+
+        if (failed.length > 0) {
+          console.info(`apper_info: Failed to toggle ${failed.length} tasks. Failed records: ${JSON.stringify(failed)}`);
+          failed.forEach(record => {
+            if (record.message) toast.error(record.message);
+          });
+        }
+
+        return successful.length > 0 ? successful[0].data : null;
+      }
+
+      return null;
+    } catch (error) {
+      console.info(`apper_info: An error occurred in taskService.toggleComplete(${id}). The error is: ${error.message}`);
+      toast.error("Failed to update task status");
+      return null;
     }
-    throw new Error("Task not found");
   },
 
   async delete(id) {
-    await delay();
-    const index = tasks.findIndex(task => task.Id === parseInt(id));
-    if (index !== -1) {
-      tasks.splice(index, 1);
-      return true;
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      const params = {
+        RecordIds: [parseInt(id)]
+      };
+
+      const response = await apperClient.deleteRecord("task_c", params);
+
+      if (!response.success) {
+        console.info(`apper_info: An error was received in deleteRecord for task_c. The response body is: ${JSON.stringify(response)}.`);
+        toast.error(response.message);
+        return false;
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+
+        if (failed.length > 0) {
+          console.info(`apper_info: Failed to delete ${failed.length} tasks. Failed records: ${JSON.stringify(failed)}`);
+          failed.forEach(record => {
+            if (record.message) toast.error(record.message);
+          });
+        }
+
+        return successful.length > 0;
+      }
+
+      return false;
+    } catch (error) {
+      console.info(`apper_info: An error occurred in taskService.delete(${id}). The error is: ${error.message}`);
+      toast.error("Failed to delete task");
+      return false;
     }
-    throw new Error("Task not found");
   }
 };
 

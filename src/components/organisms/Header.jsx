@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSelector } from "react-redux";
+import { AuthContext } from "@/App";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import { cn } from "@/utils/cn";
-
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user } = useSelector((state) => state.user);
+  const { logout } = useContext(AuthContext);
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: "LayoutDashboard" },
@@ -15,7 +18,6 @@ const Header = () => {
     { path: "/finances", label: "Finances", icon: "DollarSign" },
     { path: "/weather", label: "Weather", icon: "Cloud" }
   ];
-
   return (
     <header className="sticky top-0 z-30 bg-white border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,8 +32,7 @@ const Header = () => {
               </span>
             </div>
           </div>
-
-          <nav className="hidden md:flex items-center space-x-1">
+<nav className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <NavLink
                 key={item.path}
@@ -51,6 +52,24 @@ const Header = () => {
             ))}
           </nav>
 
+          <div className="hidden md:flex items-center space-x-2">
+            {user && (
+              <>
+                <span className="text-sm text-gray-600">
+                  {user.firstName} {user.lastName}
+                </span>
+                <Button
+                  variant="outline"
+                  size="small"
+                  onClick={logout}
+                  className="flex items-center"
+                >
+                  <ApperIcon name="LogOut" className="w-4 h-4 mr-2" />
+                  Logout
+                </Button>
+              </>
+            )}
+          </div>
           <Button
             variant="ghost"
             size="small"
@@ -70,7 +89,7 @@ const Header = () => {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden border-t border-gray-100"
           >
-            <nav className="px-4 py-4 space-y-1">
+<nav className="px-4 py-4 space-y-1">
               {navItems.map((item) => (
                 <NavLink
                   key={item.path}
@@ -89,6 +108,16 @@ const Header = () => {
                   {item.label}
                 </NavLink>
               ))}
+              {user && (
+                <Button
+                  variant="outline"
+                  onClick={logout}
+                  className="w-full flex items-center justify-center mt-4"
+                >
+                  <ApperIcon name="LogOut" className="w-5 h-5 mr-3" />
+                  Logout
+                </Button>
+              )}
             </nav>
           </motion.div>
         )}

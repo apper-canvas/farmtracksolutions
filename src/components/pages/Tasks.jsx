@@ -22,13 +22,13 @@ const Tasks = () => {
   const [editingTask, setEditingTask] = useState(null);
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterPriority, setFilterPriority] = useState("all");
-  const [formData, setFormData] = useState({
-    farmId: 1,
-    cropId: "",
-    title: "",
-    description: "",
-    dueDate: "",
-    priority: "medium"
+const [formData, setFormData] = useState({
+    farm_c: 1,
+    crop_c: "",
+    title_c: "",
+    description_c: "",
+    duedate_c: "",
+    priority_c: "medium"
   });
 
   const loadData = async () => {
@@ -80,15 +80,15 @@ const Tasks = () => {
     }
   };
 
-  const handleEdit = (task) => {
+const handleEdit = (task) => {
     setEditingTask(task);
     setFormData({
-      farmId: task.farmId,
-      cropId: task.cropId || "",
-      title: task.title,
-      description: task.description,
-      dueDate: task.dueDate,
-      priority: task.priority
+      farm_c: task.farm_c?.Id || task.farm_c || 1,
+      crop_c: task.crop_c?.Id || task.crop_c || "",
+      title_c: task.title_c,
+      description_c: task.description_c,
+      duedate_c: task.duedate_c,
+      priority_c: task.priority_c
     });
     setIsModalOpen(true);
   };
@@ -106,15 +106,15 @@ const Tasks = () => {
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+setIsModalOpen(false);
     setEditingTask(null);
     setFormData({
-      farmId: 1,
-      cropId: "",
-      title: "",
-      description: "",
-      dueDate: "",
-      priority: "medium"
+      farm_c: 1,
+      crop_c: "",
+      title_c: "",
+      description_c: "",
+      duedate_c: "",
+      priority_c: "medium"
     });
   };
 
@@ -123,21 +123,21 @@ const Tasks = () => {
 
   let filteredTasks = tasks;
   
-  if (filterStatus === "completed") {
-    filteredTasks = filteredTasks.filter(t => t.completed);
+if (filterStatus === "completed") {
+    filteredTasks = filteredTasks.filter(t => t.completed_c);
   } else if (filterStatus === "pending") {
-    filteredTasks = filteredTasks.filter(t => !t.completed);
+    filteredTasks = filteredTasks.filter(t => !t.completed_c);
   }
   
   if (filterPriority !== "all") {
-    filteredTasks = filteredTasks.filter(t => t.priority === filterPriority);
+    filteredTasks = filteredTasks.filter(t => t.priority_c === filterPriority);
   }
 
-  filteredTasks = filteredTasks.sort((a, b) => {
-    if (a.completed !== b.completed) {
-      return a.completed ? 1 : -1;
+filteredTasks = filteredTasks.sort((a, b) => {
+    if (a.completed_c !== b.completed_c) {
+      return a.completed_c ? 1 : -1;
     }
-    return new Date(a.dueDate) - new Date(b.dueDate);
+    return new Date(a.duedate_c) - new Date(b.duedate_c);
   });
 
   return (
@@ -207,9 +207,9 @@ const Tasks = () => {
         >
           {filteredTasks.map((task) => (
             <TaskItem
-              key={task.Id}
+key={task.Id}
               task={task}
-              crop={crops.find(c => c.Id === task.cropId)}
+              crop={crops.find(c => c.Id === (task.crop_c?.Id || task.crop_c))}
               onToggle={handleToggleComplete}
               onEdit={handleEdit}
               onDelete={handleDelete}
@@ -225,23 +225,23 @@ const Tasks = () => {
         size="default"
       >
         <form onSubmit={handleSubmit} className="space-y-5">
-          <FormField
+<FormField
             label="Task Title"
             required
-            value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            value={formData.title_c}
+            onChange={(e) => setFormData({ ...formData, title_c: e.target.value })}
             placeholder="e.g., Water tomato plants"
           />
 
           <SelectField
             label="Related Crop"
-            value={formData.cropId}
-            onChange={(e) => setFormData({ ...formData, cropId: parseInt(e.target.value) || "" })}
+            value={formData.crop_c}
+            onChange={(e) => setFormData({ ...formData, crop_c: parseInt(e.target.value) || "" })}
           >
             <option value="">None (General task)</option>
             {crops.map(crop => (
               <option key={crop.Id} value={crop.Id}>
-                {crop.name} ({crop.plotField})
+                {crop.name_c} ({crop.plotfield_c})
               </option>
             ))}
           </SelectField>
@@ -251,8 +251,8 @@ const Tasks = () => {
               Description
             </label>
             <textarea
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              value={formData.description_c}
+              onChange={(e) => setFormData({ ...formData, description_c: e.target.value })}
               rows={3}
               className="w-full px-4 py-2.5 text-base bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-gray-400"
               placeholder="Add task details..."
@@ -264,14 +264,14 @@ const Tasks = () => {
               label="Due Date"
               type="date"
               required
-              value={formData.dueDate}
-              onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+              value={formData.duedate_c}
+              onChange={(e) => setFormData({ ...formData, duedate_c: e.target.value })}
             />
             <SelectField
               label="Priority"
               required
-              value={formData.priority}
-              onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
+              value={formData.priority_c}
+              onChange={(e) => setFormData({ ...formData, priority_c: e.target.value })}
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>

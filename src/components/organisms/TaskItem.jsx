@@ -13,9 +13,8 @@ const TaskItem = ({ task, crop, onToggle, onEdit, onDelete }) => {
     low: { variant: "low", icon: "Info", color: "text-green-600" }
   };
 
-  const config = priorityConfig[task.priority] || priorityConfig.medium;
-  const isOverdue = !task.completed && new Date(task.dueDate) < new Date();
-
+  const config = priorityConfig[task.priority_c] || priorityConfig.medium;
+  const isOverdue = !task.completed_c && new Date(task.duedate_c) < new Date();
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -25,15 +24,15 @@ const TaskItem = ({ task, crop, onToggle, onEdit, onDelete }) => {
       <Card className={cn("p-5", task.completed && "opacity-60")}>
         <div className="flex items-start space-x-4">
           <button
-            onClick={() => onToggle(task.Id)}
+onClick={() => onToggle(task.Id)}
             className={cn(
               "mt-1 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all duration-200",
-              task.completed
+              task.completed_c
                 ? "bg-gradient-to-r from-success to-green-600 border-success"
                 : "border-gray-300 hover:border-primary"
             )}
           >
-            {task.completed && (
+            {task.completed_c && (
               <ApperIcon name="Check" className="w-4 h-4 text-white" />
             )}
           </button>
@@ -41,22 +40,22 @@ const TaskItem = ({ task, crop, onToggle, onEdit, onDelete }) => {
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1">
-                <h3 className={cn(
+<h3 className={cn(
                   "text-base font-bold text-gray-900 mb-1",
-                  task.completed && "line-through"
+                  task.completed_c && "line-through"
                 )}>
-                  {task.title}
+                  {task.title_c}
                 </h3>
-                {crop && (
+{crop && (
                   <p className="text-sm text-gray-600 mb-1">
-                    <span className="font-semibold">Crop:</span> {crop.name} ({crop.plotField})
+                    <span className="font-semibold">Crop:</span> {crop.name_c} ({crop.plotfield_c})
                   </p>
                 )}
               </div>
               <div className="flex items-center space-x-2 ml-4">
-                <Badge variant={config.variant}>
+<Badge variant={config.variant}>
                   <ApperIcon name={config.icon} className="w-3 h-3 mr-1" />
-                  {task.priority}
+                  {task.priority_c}
                 </Badge>
                 {isOverdue && (
                   <Badge variant="high">
@@ -67,14 +66,14 @@ const TaskItem = ({ task, crop, onToggle, onEdit, onDelete }) => {
               </div>
             </div>
 
-            {task.description && (
-              <p className="text-sm text-gray-600 mb-3">{task.description}</p>
+{task.description_c && (
+              <p className="text-sm text-gray-600 mb-3">{task.description_c}</p>
             )}
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center text-sm text-gray-600">
+<div className="flex items-center text-sm text-gray-600">
                 <ApperIcon name="Calendar" className="w-4 h-4 mr-2" />
-                Due: {format(new Date(task.dueDate), "MMM dd, yyyy")}
+                Due: {format(new Date(task.duedate_c), "MMM dd, yyyy")}
               </div>
 
               <div className="flex items-center space-x-2">

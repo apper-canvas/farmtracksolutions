@@ -19,15 +19,15 @@ const Crops = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCrop, setEditingCrop] = useState(null);
   const [filterStatus, setFilterStatus] = useState("all");
-  const [formData, setFormData] = useState({
-    farmId: 1,
-    name: "",
-    variety: "",
-    plotField: "",
-    plantingDate: "",
-    expectedHarvestDate: "",
-    status: "planted",
-    notes: ""
+const [formData, setFormData] = useState({
+    farm_c: 1,
+    name_c: "",
+    variety_c: "",
+    plotfield_c: "",
+    plantingdate_c: "",
+    expectedharvestdate_c: "",
+    status_c: "planted",
+    notes_c: ""
   });
 
   const loadCrops = async () => {
@@ -65,17 +65,17 @@ const Crops = () => {
     }
   };
 
-  const handleEdit = (crop) => {
+const handleEdit = (crop) => {
     setEditingCrop(crop);
     setFormData({
-      farmId: crop.farmId,
-      name: crop.name,
-      variety: crop.variety,
-      plotField: crop.plotField,
-      plantingDate: crop.plantingDate,
-      expectedHarvestDate: crop.expectedHarvestDate,
-      status: crop.status,
-      notes: crop.notes
+      farm_c: crop.farm_c?.Id || crop.farm_c || 1,
+      name_c: crop.name_c,
+      variety_c: crop.variety_c,
+      plotfield_c: crop.plotfield_c,
+      plantingdate_c: crop.plantingdate_c,
+      expectedharvestdate_c: crop.expectedharvestdate_c,
+      status_c: crop.status_c,
+      notes_c: crop.notes_c
     });
     setIsModalOpen(true);
   };
@@ -93,26 +93,26 @@ const Crops = () => {
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+setIsModalOpen(false);
     setEditingCrop(null);
     setFormData({
-      farmId: 1,
-      name: "",
-      variety: "",
-      plotField: "",
-      plantingDate: "",
-      expectedHarvestDate: "",
-      status: "planted",
-      notes: ""
+      farm_c: 1,
+      name_c: "",
+      variety_c: "",
+      plotfield_c: "",
+      plantingdate_c: "",
+      expectedharvestdate_c: "",
+      status_c: "planted",
+      notes_c: ""
     });
   };
 
   if (loading) return <Loading count={3} />;
   if (error) return <Error message={error} onRetry={loadCrops} />;
 
-  const filteredCrops = filterStatus === "all" 
+const filteredCrops = filterStatus === "all" 
     ? crops 
-    : crops.filter(c => c.status === filterStatus);
+    : crops.filter(c => c.status_c === filterStatus);
 
   return (
     <div className="space-y-6">
@@ -184,14 +184,14 @@ const Crops = () => {
               label="Crop Name"
               required
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+onChange={(e) => setFormData({ ...formData, name_c: e.target.value })}
               placeholder="e.g., Tomatoes"
             />
             <FormField
               label="Variety"
               required
-              value={formData.variety}
-              onChange={(e) => setFormData({ ...formData, variety: e.target.value })}
+              value={formData.variety_c}
+              onChange={(e) => setFormData({ ...formData, variety_c: e.target.value })}
               placeholder="e.g., Roma"
             />
           </div>
@@ -200,15 +200,15 @@ const Crops = () => {
             <FormField
               label="Plot/Field"
               required
-              value={formData.plotField}
-              onChange={(e) => setFormData({ ...formData, plotField: e.target.value })}
+              value={formData.plotfield_c}
+              onChange={(e) => setFormData({ ...formData, plotfield_c: e.target.value })}
               placeholder="e.g., Field A"
             />
             <SelectField
               label="Status"
               required
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+              value={formData.status_c}
+              onChange={(e) => setFormData({ ...formData, status_c: e.target.value })}
             >
               <option value="planted">Planted</option>
               <option value="growing">Growing</option>
@@ -222,15 +222,15 @@ const Crops = () => {
               label="Planting Date"
               type="date"
               required
-              value={formData.plantingDate}
-              onChange={(e) => setFormData({ ...formData, plantingDate: e.target.value })}
+              value={formData.plantingdate_c}
+              onChange={(e) => setFormData({ ...formData, plantingdate_c: e.target.value })}
             />
             <FormField
               label="Expected Harvest Date"
               type="date"
               required
-              value={formData.expectedHarvestDate}
-              onChange={(e) => setFormData({ ...formData, expectedHarvestDate: e.target.value })}
+              value={formData.expectedharvestdate_c}
+              onChange={(e) => setFormData({ ...formData, expectedharvestdate_c: e.target.value })}
             />
           </div>
 
@@ -239,8 +239,8 @@ const Crops = () => {
               Notes
             </label>
             <textarea
-              value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              value={formData.notes_c}
+              onChange={(e) => setFormData({ ...formData, notes_c: e.target.value })}
               rows={3}
               className="w-full px-4 py-2.5 text-base bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-gray-400"
               placeholder="Add any additional notes..."
