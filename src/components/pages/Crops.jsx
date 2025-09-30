@@ -24,8 +24,8 @@ const [formData, setFormData] = useState({
     name_c: "",
     variety_c: "",
     plotfield_c: "",
-    plantingdate_c: "",
-    expectedharvestdate_c: "",
+plantingdate_c: null,
+    expectedharvestdate_c: null,
     status_c: "planted",
     notes_c: ""
   });
@@ -72,8 +72,8 @@ const handleEdit = (crop) => {
       name_c: crop.name_c,
       variety_c: crop.variety_c,
       plotfield_c: crop.plotfield_c,
-      plantingdate_c: crop.plantingdate_c,
-      expectedharvestdate_c: crop.expectedharvestdate_c,
+plantingdate_c: crop.plantingdate_c || null,
+      expectedharvestdate_c: crop.expectedharvestdate_c || null,
       status_c: crop.status_c,
       notes_c: crop.notes_c
     });
@@ -100,8 +100,8 @@ setIsModalOpen(false);
       name_c: "",
       variety_c: "",
       plotfield_c: "",
-      plantingdate_c: "",
-      expectedharvestdate_c: "",
+plantingdate_c: null,
+      expectedharvestdate_c: null,
       status_c: "planted",
       notes_c: ""
     });

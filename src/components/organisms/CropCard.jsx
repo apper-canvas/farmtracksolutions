@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { safeFormatDate } from "@/utils/cn";
 import { motion } from "framer-motion";
 import React from "react";
 import ApperIcon from "@/components/ApperIcon";
@@ -45,14 +45,14 @@ const statusConfig = {
             <ApperIcon name="Calendar" className="w-4 h-4 mr-2 text-primary" />
             <span className="text-xs">Planted:</span>
             <span className="font-semibold text-gray-900 ml-1">
-              {format(new Date(crop.plantingdate_c), "MMM dd, yyyy")}
+{safeFormatDate(crop.plantingdate_c, "MMM dd, yyyy")}
             </span>
           </div>
           <div className="flex items-center text-sm text-gray-600">
             <ApperIcon name="TrendingUp" className="w-4 h-4 mr-2 text-primary" />
             <span className="text-xs">Expected Harvest:</span>
-            <span className="font-semibold text-gray-900 ml-1">
-              {format(new Date(crop.expectedharvestdate_c), "MMM dd, yyyy")}
+<span className="font-semibold text-gray-900 ml-1">
+              {safeFormatDate(crop.expectedharvestdate_c, "MMM dd, yyyy")}
             </span>
           </div>
 </div>

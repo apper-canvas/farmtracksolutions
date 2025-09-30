@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
-import { format } from "date-fns";
+import { safeFormatDate } from "@/utils/cn";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Select from "@/components/atoms/Select";
@@ -28,7 +28,7 @@ const [formData, setFormData] = useState({
     amount_c: "",
     category_c: "",
     description_c: "",
-    date_c: format(new Date(), "yyyy-MM-dd")
+date_c: null
   });
 
   const loadTransactions = async () => {
@@ -80,6 +80,10 @@ const handleEdit = (transaction) => {
       category_c: transaction.category_c,
       description_c: transaction.description_c,
       date_c: transaction.date_c
+});
+    setFormData({
+      ...formData,
+      date_c: new Date().toISOString().split('T')[0]
     });
     setIsModalOpen(true);
   };
@@ -105,7 +109,7 @@ setIsModalOpen(false);
       amount_c: "",
       category_c: "",
       description_c: "",
-      date_c: format(new Date(), "yyyy-MM-dd")
+date_c: new Date().toISOString().split('T')[0]
     });
   };
 
@@ -116,7 +120,13 @@ const filteredTransactions = filterType === "all"
     ? transactions
     : transactions.filter(t => t.type_c === filterType);
 const sortedTransactions = [...filteredTransactions].sort(
-    (a, b) => new Date(b.date_c) - new Date(a.date_c)
+(a, b) => {
+      const dateA = new Date(a.date_c);
+      const dateB = new Date(b.date_c);
+      if (!dateA || isNaN(dateA.getTime())) return 1;
+      if (!dateB || isNaN(dateB.getTime())) return -1;
+      return dateB - dateA;
+    }
   );
 
 const totalIncome = transactions

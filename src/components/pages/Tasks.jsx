@@ -27,7 +27,7 @@ const [formData, setFormData] = useState({
     crop_c: "",
     title_c: "",
     description_c: "",
-    duedate_c: "",
+duedate_c: null,
     priority_c: "medium"
   });
 
@@ -87,7 +87,7 @@ const handleEdit = (task) => {
       crop_c: task.crop_c?.Id || task.crop_c || "",
       title_c: task.title_c,
       description_c: task.description_c,
-      duedate_c: task.duedate_c,
+duedate_c: task.duedate_c || null,
       priority_c: task.priority_c
     });
     setIsModalOpen(true);
@@ -113,7 +113,7 @@ setIsModalOpen(false);
       crop_c: "",
       title_c: "",
       description_c: "",
-      duedate_c: "",
+duedate_c: null,
       priority_c: "medium"
     });
   };
@@ -137,7 +137,11 @@ filteredTasks = filteredTasks.sort((a, b) => {
     if (a.completed_c !== b.completed_c) {
       return a.completed_c ? 1 : -1;
     }
-    return new Date(a.duedate_c) - new Date(b.duedate_c);
+const dateA = new Date(a.duedate_c);
+    const dateB = new Date(b.duedate_c);
+    if (!dateA || isNaN(dateA.getTime())) return 1;
+    if (!dateB || isNaN(dateB.getTime())) return -1;
+    return dateA - dateB;
   });
 
   return (

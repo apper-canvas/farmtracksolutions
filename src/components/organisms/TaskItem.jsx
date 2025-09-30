@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { safeFormatDate, safeParseDate } from "@/utils/cn";
 import { motion } from "framer-motion";
 import Card from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
@@ -14,7 +14,8 @@ const TaskItem = ({ task, crop, onToggle, onEdit, onDelete }) => {
   };
 
   const config = priorityConfig[task.priority_c] || priorityConfig.medium;
-  const isOverdue = !task.completed_c && new Date(task.duedate_c) < new Date();
+const dueDate = safeParseDate(task.duedate_c);
+  const isOverdue = !task.completed_c && dueDate && dueDate < new Date();
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -73,7 +74,7 @@ onClick={() => onToggle(task.Id)}
             <div className="flex items-center justify-between">
 <div className="flex items-center text-sm text-gray-600">
                 <ApperIcon name="Calendar" className="w-4 h-4 mr-2" />
-                Due: {format(new Date(task.duedate_c), "MMM dd, yyyy")}
+Due: {safeFormatDate(task.duedate_c, "MMM dd, yyyy")}
               </div>
 
               <div className="flex items-center space-x-2">

@@ -12,7 +12,8 @@ import cropService from "@/services/api/cropService";
 import taskService from "@/services/api/taskService";
 import transactionService from "@/services/api/transactionService";
 import weatherService from "@/services/api/weatherService";
-import { format, isThisMonth } from "date-fns";
+import { isThisMonth } from "date-fns";
+import { safeFormatDate, safeParseDate } from "@/utils/cn";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -56,8 +57,10 @@ const Dashboard = () => {
 const activeCrops = crops.filter(c => c.status_c === "growing" || c.status_c === "planted").length;
   const pendingTasks = tasks.filter(t => !t.completed_c).length;
   
-  const thisMonthTransactions = transactions.filter(t => 
-    isThisMonth(new Date(t.date_c))
+const thisMonthTransactions = transactions.filter(t => {
+    const date = safeParseDate(t.date_c);
+    return date && isThisMonth(date);
+  }
   );
   const monthExpenses = thisMonthTransactions
     .filter(t => t.type_c === "expense")
@@ -69,7 +72,13 @@ const activeCrops = crops.filter(c => c.status_c === "growing" || c.status_c ===
   const recentTransactions = transactions.slice(0, 5);
   const upcomingTasks = tasks
     .filter(t => !t.completed_c)
-    .sort((a, b) => new Date(a.duedate_c) - new Date(b.duedate_c))
+.sort((a, b) => {
+      const dateA = safeParseDate(a.duedate_c);
+      const dateB = safeParseDate(b.duedate_c);
+      if (!dateA) return 1;
+      if (!dateB) return -1;
+      return dateA - dateB;
+    })
     .slice(0, 5);
   return (
     <div className="space-y-8">
@@ -149,7 +158,7 @@ const activeCrops = crops.filter(c => c.status_c === "growing" || c.status_c ===
                         <div>
                           <p className="font-semibold text-gray-900">{task.title_c}</p>
                           <p className="text-sm text-gray-600">
-                            Due: {format(new Date(task.duedate_c), "MMM dd, yyyy")}
+Due: {safeFormatDate(task.duedate_c, "MMM dd, yyyy")}
                           </p>
                         </div>
                       </div>
@@ -206,7 +215,7 @@ const activeCrops = crops.filter(c => c.status_c === "growing" || c.status_c ===
                       <div>
                         <p className="font-semibold text-gray-900">{transaction.category_c}</p>
                         <p className="text-sm text-gray-600">
-                          {format(new Date(transaction.date_c), "MMM dd, yyyy")}
+{safeFormatDate(transaction.date_c, "MMM dd, yyyy")}
                         </p>
                       </div>
                     </div>

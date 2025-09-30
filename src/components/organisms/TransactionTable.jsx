@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { safeFormatDate } from "@/utils/cn";
 import { motion } from "framer-motion";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
@@ -41,7 +41,7 @@ const TransactionTable = ({ transactions, onEdit, onDelete }) => {
                 className="hover:bg-gray-50 transition-colors duration-150"
               >
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-{format(new Date(transaction.date_c), "MMM dd, yyyy")}
+{safeFormatDate(transaction.date_c, "MMM dd, yyyy")}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={cn(
