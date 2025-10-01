@@ -20,12 +20,12 @@ const Crops = () => {
   const [editingCrop, setEditingCrop] = useState(null);
   const [filterStatus, setFilterStatus] = useState("all");
 const [formData, setFormData] = useState({
-    farm_c: 1,
+farm_id_c: 1,
     name_c: "",
     variety_c: "",
-    plotfield_c: "",
-plantingdate_c: null,
-    expectedharvestdate_c: null,
+    plot_field_c: "",
+    planting_date_c: null,
+    expected_harvest_date_c: null,
     status_c: "planted",
     notes_c: ""
   });
@@ -68,12 +68,12 @@ plantingdate_c: null,
 const handleEdit = (crop) => {
     setEditingCrop(crop);
     setFormData({
-      farm_c: crop.farm_c?.Id || crop.farm_c || 1,
+farm_id_c: crop.farm_id_c?.Id || crop.farm_id_c || 1,
       name_c: crop.name_c,
       variety_c: crop.variety_c,
-      plotfield_c: crop.plotfield_c,
-plantingdate_c: crop.plantingdate_c || null,
-      expectedharvestdate_c: crop.expectedharvestdate_c || null,
+      plot_field_c: crop.plot_field_c,
+      planting_date_c: crop.planting_date_c || null,
+      expected_harvest_date_c: crop.expected_harvest_date_c || null,
       status_c: crop.status_c,
       notes_c: crop.notes_c
     });
@@ -96,12 +96,12 @@ plantingdate_c: crop.plantingdate_c || null,
 setIsModalOpen(false);
     setEditingCrop(null);
     setFormData({
-      farm_c: 1,
+farm_id_c: 1,
       name_c: "",
       variety_c: "",
-      plotfield_c: "",
-plantingdate_c: null,
-      expectedharvestdate_c: null,
+      plot_field_c: "",
+      planting_date_c: null,
+      expected_harvest_date_c: null,
       status_c: "planted",
       notes_c: ""
     });
@@ -200,8 +200,8 @@ onChange={(e) => setFormData({ ...formData, name_c: e.target.value })}
             <FormField
               label="Plot/Field"
               required
-              value={formData.plotfield_c}
-              onChange={(e) => setFormData({ ...formData, plotfield_c: e.target.value })}
+value={formData.plot_field_c}
+              onChange={(e) => setFormData({ ...formData, plot_field_c: e.target.value })}
               placeholder="e.g., Field A"
             />
             <SelectField
@@ -222,15 +222,15 @@ onChange={(e) => setFormData({ ...formData, name_c: e.target.value })}
               label="Planting Date"
               type="date"
               required
-              value={formData.plantingdate_c}
-              onChange={(e) => setFormData({ ...formData, plantingdate_c: e.target.value })}
+value={formData.planting_date_c}
+              onChange={(e) => setFormData({ ...formData, planting_date_c: e.target.value })}
             />
             <FormField
               label="Expected Harvest Date"
               type="date"
               required
-              value={formData.expectedharvestdate_c}
-              onChange={(e) => setFormData({ ...formData, expectedharvestdate_c: e.target.value })}
+value={formData.expected_harvest_date_c}
+              onChange={(e) => setFormData({ ...formData, expected_harvest_date_c: e.target.value })}
             />
           </div>
 

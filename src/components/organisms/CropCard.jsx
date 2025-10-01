@@ -39,20 +39,20 @@ const statusConfig = {
         <div className="space-y-3 mb-4">
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600">Plot/Field:</span>
-<span className="font-semibold text-gray-900">{crop.plotfield_c}</span>
+<span className="font-semibold text-gray-900">{crop.plot_field_c}</span>
           </div>
           <div className="flex items-center text-sm text-gray-600">
             <ApperIcon name="Calendar" className="w-4 h-4 mr-2 text-primary" />
             <span className="text-xs">Planted:</span>
             <span className="font-semibold text-gray-900 ml-1">
-{safeFormatDate(crop.plantingdate_c, "MMM dd, yyyy")}
+{safeFormatDate(crop.planting_date_c, "MMM dd, yyyy")}
             </span>
           </div>
           <div className="flex items-center text-sm text-gray-600">
             <ApperIcon name="TrendingUp" className="w-4 h-4 mr-2 text-primary" />
             <span className="text-xs">Expected Harvest:</span>
 <span className="font-semibold text-gray-900 ml-1">
-              {safeFormatDate(crop.expectedharvestdate_c, "MMM dd, yyyy")}
+{safeFormatDate(crop.expected_harvest_date_c, "MMM dd, yyyy")}
             </span>
           </div>
 </div>

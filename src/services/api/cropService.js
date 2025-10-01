@@ -13,12 +13,12 @@ const cropService = {
         fields: [
           { field: { Name: "name_c" } },
           { field: { Name: "variety_c" } },
-          { field: { Name: "plotfield_c" } },
-          { field: { Name: "plantingdate_c" } },
-          { field: { Name: "expectedharvestdate_c" } },
+{ field: { Name: "plot_field_c" } },
+          { field: { Name: "planting_date_c" } },
+          { field: { Name: "expected_harvest_date_c" } },
           { field: { Name: "status_c" } },
           { field: { Name: "notes_c" } },
-          { field: { Name: "farm_c" }, referenceField: { field: { Name: "name_c" } } }
+          { field: { Name: "farm_id_c" }, referenceField: { field: { Name: "name_c" } } }
         ],
         orderBy: [{ fieldName: "Id", sorttype: "DESC" }]
       };
@@ -51,12 +51,12 @@ const cropService = {
         fields: [
           { field: { Name: "name_c" } },
           { field: { Name: "variety_c" } },
-          { field: { Name: "plotfield_c" } },
-          { field: { Name: "plantingdate_c" } },
-          { field: { Name: "expectedharvestdate_c" } },
+{ field: { Name: "plot_field_c" } },
+          { field: { Name: "planting_date_c" } },
+          { field: { Name: "expected_harvest_date_c" } },
           { field: { Name: "status_c" } },
           { field: { Name: "notes_c" } },
-          { field: { Name: "farm_c" }, referenceField: { field: { Name: "name_c" } } }
+          { field: { Name: "farm_id_c" }, referenceField: { field: { Name: "name_c" } } }
         ]
       };
 
@@ -87,13 +87,13 @@ const cropService = {
       const payload = {
         records: [{
           name_c: cropData.name_c,
-          variety_c: cropData.variety_c,
-          plotfield_c: cropData.plotfield_c,
-          plantingdate_c: cropData.plantingdate_c,
-          expectedharvestdate_c: cropData.expectedharvestdate_c,
+variety_c: cropData.variety_c,
+          plot_field_c: cropData.plot_field_c,
+          planting_date_c: cropData.planting_date_c,
+          expected_harvest_date_c: cropData.expected_harvest_date_c,
           status_c: cropData.status_c,
           notes_c: cropData.notes_c || "",
-          farm_c: parseInt(cropData.farm_c)
+          farm_id_c: parseInt(cropData.farm_id_c)
         }]
       };
 
@@ -143,12 +143,12 @@ const cropService = {
           Id: parseInt(id),
           name_c: cropData.name_c,
           variety_c: cropData.variety_c,
-          plotfield_c: cropData.plotfield_c,
-          plantingdate_c: cropData.plantingdate_c,
-          expectedharvestdate_c: cropData.expectedharvestdate_c,
+plot_field_c: cropData.plot_field_c,
+          planting_date_c: cropData.planting_date_c,
+          expected_harvest_date_c: cropData.expected_harvest_date_c,
           status_c: cropData.status_c,
           notes_c: cropData.notes_c || "",
-          farm_c: parseInt(cropData.farm_c)
+          farm_id_c: parseInt(cropData.farm_id_c)
         }]
       };
 
