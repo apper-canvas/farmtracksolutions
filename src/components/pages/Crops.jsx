@@ -183,7 +183,7 @@ const filteredCrops = filterStatus === "all"
             <FormField
               label="Crop Name"
               required
-              value={formData.name}
+value={formData.name_c}
 onChange={(e) => setFormData({ ...formData, name_c: e.target.value })}
               placeholder="e.g., Tomatoes"
             />
