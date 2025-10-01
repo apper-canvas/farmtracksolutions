@@ -23,12 +23,12 @@ const Finances = () => {
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [filterType, setFilterType] = useState("all");
 const [formData, setFormData] = useState({
-farmId_c: 1,
+    farm_id_c: 1,
     type_c: "expense",
     amount_c: "",
     category_c: "",
     description_c: "",
-date_c: null
+    date_c: ""
   });
 
   const loadTransactions = async () => {
@@ -74,16 +74,12 @@ try {
 const handleEdit = (transaction) => {
     setEditingTransaction(transaction);
     setFormData({
-farmId_c: transaction.farmId_c?.Id || transaction.farmId_c || 1,
+farm_id_c: transaction.farm_id_c?.Id || transaction.farm_id_c || 1,
       type_c: transaction.type_c,
       amount_c: transaction.amount_c.toString(),
       category_c: transaction.category_c,
       description_c: transaction.description_c,
       date_c: transaction.date_c
-});
-    setFormData({
-      ...formData,
-      date_c: new Date().toISOString().split('T')[0]
     });
     setIsModalOpen(true);
   };
@@ -104,12 +100,12 @@ farmId_c: transaction.farmId_c?.Id || transaction.farmId_c || 1,
 setIsModalOpen(false);
     setEditingTransaction(null);
     setFormData({
-farmId_c: 1,
+farm_id_c: 1,
       type_c: "expense",
       amount_c: "",
       category_c: "",
       description_c: "",
-date_c: new Date().toISOString().split('T')[0]
+      date_c: ""
     });
   };
 
