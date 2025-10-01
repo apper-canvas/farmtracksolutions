@@ -11,6 +11,7 @@ import Tasks from "@/components/pages/Tasks";
 import Finances from "@/components/pages/Finances";
 import Weather from "@/components/pages/Weather";
 import Login from "@/components/pages/Login";
+import Equipments from "@/components/pages/Equipments";
 import Signup from "@/components/pages/Signup";
 import Callback from "@/components/pages/Callback";
 import ErrorPage from "@/components/pages/ErrorPage";
@@ -126,6 +127,7 @@ function AppContent() {
           <Route path="tasks" element={<Tasks />} />
           <Route path="finances" element={<Finances />} />
 <Route path="farms" element={<Farms />} />
+<Route path="equipments" element={<Equipments />} />
           <Route path="weather" element={<Weather />} />
         </Route>
       </Routes>

@@ -14,6 +14,7 @@ const Header = () => {
 const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: "LayoutDashboard" },
     { path: "/farms", label: "Farms", icon: "Warehouse" },
+    { path: "/equipments", label: "Equipments", icon: "Box" },
     { path: "/crops", label: "Crops", icon: "Sprout" },
     { path: "/tasks", label: "Tasks", icon: "CheckSquare" },
     { path: "/finances", label: "Finances", icon: "DollarSign" },
