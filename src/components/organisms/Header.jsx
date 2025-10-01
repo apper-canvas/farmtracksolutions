@@ -11,8 +11,9 @@ const Header = () => {
   const { user } = useSelector((state) => state.user);
   const { logout } = useContext(AuthContext);
 
-  const navItems = [
+const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: "LayoutDashboard" },
+    { path: "/farms", label: "Farms", icon: "Warehouse" },
     { path: "/crops", label: "Crops", icon: "Sprout" },
     { path: "/tasks", label: "Tasks", icon: "CheckSquare" },
     { path: "/finances", label: "Finances", icon: "DollarSign" },
