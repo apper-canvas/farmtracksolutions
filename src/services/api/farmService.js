@@ -10,11 +10,12 @@ const farmService = {
       });
 
       const params = {
-        fields: [
+fields: [
           { field: { Name: "name_c" } },
           { field: { Name: "location_c" } },
-{ field: { Name: "size_c" } },
-          { field: { Name: "soil_type_c" } }
+          { field: { Name: "size_c" } },
+          { field: { Name: "soil_type_c" } },
+          { field: { Name: "farm_type_c" } }
         ],
         orderBy: [{ fieldName: "Id", sorttype: "DESC" }]
       };
@@ -45,10 +46,11 @@ const farmService = {
 
       const params = {
         fields: [
-          { field: { Name: "name_c" } },
+{ field: { Name: "name_c" } },
           { field: { Name: "location_c" } },
-{ field: { Name: "size_c" } },
-          { field: { Name: "soil_type_c" } }
+          { field: { Name: "size_c" } },
+          { field: { Name: "soil_type_c" } },
+          { field: { Name: "farm_type_c" } }
         ]
       };
 
@@ -81,7 +83,8 @@ const farmService = {
           name_c: farmData.name_c,
 location_c: farmData.location_c,
           size_c: parseFloat(farmData.size_c),
-          soil_type_c: farmData.soil_type_c
+          soil_type_c: farmData.soil_type_c,
+          farm_type_c: farmData.farm_type_c
         }]
       };
 
@@ -132,7 +135,8 @@ location_c: farmData.location_c,
 name_c: farmData.name_c,
           location_c: farmData.location_c,
           size_c: parseFloat(farmData.size_c),
-          soil_type_c: farmData.soil_type_c
+          soil_type_c: farmData.soil_type_c,
+          farm_type_c: farmData.farm_type_c
         }]
       };
 
