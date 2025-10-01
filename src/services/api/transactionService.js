@@ -16,7 +16,7 @@ const transactionService = {
           { field: { Name: "category_c" } },
           { field: { Name: "description_c" } },
           { field: { Name: "date_c" } },
-          { field: { Name: "farm_c" }, referenceField: { field: { Name: "name_c" } } }
+{ field: { Name: "farmId_c" }, referenceField: { field: { Name: "name_c" } } }
         ],
         orderBy: [{ fieldName: "Id", sorttype: "DESC" }]
       };
@@ -52,7 +52,7 @@ const transactionService = {
           { field: { Name: "category_c" } },
           { field: { Name: "description_c" } },
           { field: { Name: "date_c" } },
-          { field: { Name: "farm_c" }, referenceField: { field: { Name: "name_c" } } }
+{ field: { Name: "farmId_c" }, referenceField: { field: { Name: "name_c" } } }
         ]
       };
 
@@ -87,7 +87,7 @@ const transactionService = {
           category_c: transactionData.category_c,
           description_c: transactionData.description_c || "",
           date_c: transactionData.date_c,
-          farm_c: parseInt(transactionData.farm_c)
+farmId_c: parseInt(transactionData.farmId_c)
         }]
       };
 
@@ -140,7 +140,7 @@ const transactionService = {
           category_c: transactionData.category_c,
           description_c: transactionData.description_c || "",
           date_c: transactionData.date_c,
-          farm_c: parseInt(transactionData.farm_c)
+farmId_c: parseInt(transactionData.farmId_c)
         }]
       };
 

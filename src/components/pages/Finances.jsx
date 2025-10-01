@@ -23,7 +23,7 @@ const Finances = () => {
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [filterType, setFilterType] = useState("all");
 const [formData, setFormData] = useState({
-    farm_c: 1,
+farmId_c: 1,
     type_c: "expense",
     amount_c: "",
     category_c: "",
@@ -74,7 +74,7 @@ try {
 const handleEdit = (transaction) => {
     setEditingTransaction(transaction);
     setFormData({
-      farm_c: transaction.farm_c?.Id || transaction.farm_c || 1,
+farmId_c: transaction.farmId_c?.Id || transaction.farmId_c || 1,
       type_c: transaction.type_c,
       amount_c: transaction.amount_c.toString(),
       category_c: transaction.category_c,
@@ -104,7 +104,7 @@ const handleEdit = (transaction) => {
 setIsModalOpen(false);
     setEditingTransaction(null);
     setFormData({
-      farm_c: 1,
+farmId_c: 1,
       type_c: "expense",
       amount_c: "",
       category_c: "",
