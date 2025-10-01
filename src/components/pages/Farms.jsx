@@ -22,7 +22,8 @@ const [formData, setFormData] = useState({
     name_c: "",
     location_c: "",
     size_c: "",
-    soil_type_c: ""
+soil_type_c: "",
+    farm_type_c: ""
   });
 
   useEffect(() => {
@@ -49,7 +50,8 @@ setFormData({
         name_c: farm.name_c || "",
         location_c: farm.location_c || "",
         size_c: farm.size_c || "",
-        soil_type_c: farm.soil_type_c || ""
+soil_type_c: farm.soil_type_c || "",
+        farm_type_c: farm.farm_type_c || ""
       });
     } else {
       setEditingFarm(null);
@@ -57,7 +59,8 @@ setFormData({
         name_c: "",
         location_c: "",
         size_c: "",
-        soil_type_c: ""
+soil_type_c: "",
+        farm_type_c: ""
       });
     }
     setIsModalOpen(true);
@@ -70,14 +73,15 @@ setFormData({
       name_c: "",
       location_c: "",
       size_c: "",
-      soil_type_c: ""
+soil_type_c: "",
+      farm_type_c: ""
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.soil_type_c) {
+if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.soil_type_c || !formData.farm_type_c) {
       toast.error("All fields are required");
       return;
     }
@@ -182,7 +186,8 @@ if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.so
                   <div className="flex items-center text-gray-600">
                     <ApperIcon name="Maximize" className="w-4 h-4 mr-2" />
                     <span className="text-sm">{farm.size_c} acres</span>
-                  </div>
+</div>
+                  <div className="h-4"></div>
 </div>
                 <FormField
                   label="Soil Type"
@@ -251,7 +256,7 @@ if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.so
             step="0.01"
             min="0.01"
           />
-          <SelectField
+<SelectField
             label="Soil Type"
             name="soil_type_c"
             value={formData.soil_type_c || ''}
@@ -262,6 +267,19 @@ if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.so
             <option value="Silty">Silty</option>
             <option value="Clay">Clay</option>
             <option value="Loamy">Loamy</option>
+          </SelectField>
+          <SelectField
+            label="Farm Type"
+            name="farm_type_c"
+            value={formData.farm_type_c || ''}
+            onChange={handleInputChange}
+          >
+            <option value="">Select farm type</option>
+            <option value="Crop Farm">Crop Farm</option>
+            <option value="Livestock Farm">Livestock Farm</option>
+            <option value="Mixed Farm">Mixed Farm</option>
+            <option value="Orchard">Orchard</option>
+            <option value="Vineyard">Vineyard</option>
           </SelectField>
           <div className="flex space-x-3 pt-4">
             <Button type="submit" className="flex-1">
