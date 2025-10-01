@@ -24,8 +24,8 @@ farm_id_c: 1,
     name_c: "",
     variety_c: "",
     plot_field_c: "",
-    planting_date_c: null,
-    expected_harvest_date_c: null,
+planting_date_c: "",
+    expected_harvest_date_c: "",
     status_c: "planted",
     notes_c: ""
   });
@@ -72,8 +72,8 @@ farm_id_c: crop.farm_id_c?.Id || crop.farm_id_c || 1,
       name_c: crop.name_c,
       variety_c: crop.variety_c,
       plot_field_c: crop.plot_field_c,
-      planting_date_c: crop.planting_date_c || null,
-      expected_harvest_date_c: crop.expected_harvest_date_c || null,
+planting_date_c: crop.planting_date_c || "",
+      expected_harvest_date_c: crop.expected_harvest_date_c || "",
       status_c: crop.status_c,
       notes_c: crop.notes_c
     });
@@ -100,8 +100,8 @@ farm_id_c: 1,
       name_c: "",
       variety_c: "",
       plot_field_c: "",
-      planting_date_c: null,
-      expected_harvest_date_c: null,
+planting_date_c: "",
+      expected_harvest_date_c: "",
       status_c: "planted",
       notes_c: ""
     });
