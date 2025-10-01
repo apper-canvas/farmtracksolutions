@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Button from "@/components/atoms/Button";
-import Card from "@/components/atoms/Card";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import ApperIcon from "@/components/ApperIcon";
-import Modal from "@/components/molecules/Modal";
-import FormField from "@/components/molecules/FormField";
-import farmService from "@/services/api/farmService";
 import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import Select from "@/components/atoms/Select";
+import Card from "@/components/atoms/Card";
+import Modal from "@/components/molecules/Modal";
+import SelectField from "@/components/molecules/SelectField";
+import FormField from "@/components/molecules/FormField";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import farmService from "@/services/api/farmService";
 
 function Farms() {
   const [farms, setFarms] = useState([]);
@@ -238,7 +240,7 @@ if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.so
             placeholder="Enter farm location"
             required
           />
-          <FormField
+<FormField
             label="Size (acres)"
             name="size_c"
             type="number"
@@ -249,6 +251,18 @@ if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.so
             step="0.01"
             min="0.01"
           />
+          <SelectField
+            label="Soil Type"
+            name="soil_type_c"
+            value={formData.soil_type_c || ''}
+            onChange={handleInputChange}
+          >
+            <option value="">Select soil type</option>
+            <option value="Sandy">Sandy</option>
+            <option value="Silty">Silty</option>
+            <option value="Clay">Clay</option>
+            <option value="Loamy">Loamy</option>
+          </SelectField>
           <div className="flex space-x-3 pt-4">
             <Button type="submit" className="flex-1">
               {editingFarm ? "Update Farm" : "Create Farm"}
