@@ -14,7 +14,7 @@ const TaskItem = ({ task, crop, onToggle, onEdit, onDelete }) => {
   };
 
   const config = priorityConfig[task.priority_c] || priorityConfig.medium;
-const dueDate = safeParseDate(task.duedate_c);
+const dueDate = safeParseDate(task.due_date_c);
   const isOverdue = !task.completed_c && dueDate && dueDate < new Date();
   return (
     <motion.div
@@ -74,7 +74,7 @@ onClick={() => onToggle(task.Id)}
             <div className="flex items-center justify-between">
 <div className="flex items-center text-sm text-gray-600">
                 <ApperIcon name="Calendar" className="w-4 h-4 mr-2" />
-Due: {safeFormatDate(task.duedate_c, "MMM dd, yyyy")}
+Due: {safeFormatDate(task.due_date_c, "MMM dd, yyyy")}
               </div>
 
               <div className="flex items-center space-x-2">

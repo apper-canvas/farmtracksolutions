@@ -23,11 +23,11 @@ const Tasks = () => {
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterPriority, setFilterPriority] = useState("all");
 const [formData, setFormData] = useState({
-    farm_c: 1,
-    crop_c: "",
+farm_id_c: 1,
+    crop_id_c: "",
     title_c: "",
     description_c: "",
-duedate_c: null,
+    due_date_c: null,
     priority_c: "medium"
   });
 
@@ -83,11 +83,11 @@ duedate_c: null,
 const handleEdit = (task) => {
     setEditingTask(task);
     setFormData({
-      farm_c: task.farm_c?.Id || task.farm_c || 1,
-      crop_c: task.crop_c?.Id || task.crop_c || "",
+farm_id_c: task.farm_id_c || 1,
+      crop_id_c: task.crop_id_c?.Id || task.crop_id_c || "",
       title_c: task.title_c,
       description_c: task.description_c,
-duedate_c: task.duedate_c || null,
+      due_date_c: task.due_date_c || null,
       priority_c: task.priority_c
     });
     setIsModalOpen(true);
@@ -110,10 +110,10 @@ setIsModalOpen(false);
     setEditingTask(null);
     setFormData({
       farm_c: 1,
-      crop_c: "",
+crop_id_c: "",
       title_c: "",
       description_c: "",
-duedate_c: null,
+      due_date_c: null,
       priority_c: "medium"
     });
   };
@@ -137,8 +137,8 @@ filteredTasks = filteredTasks.sort((a, b) => {
     if (a.completed_c !== b.completed_c) {
       return a.completed_c ? 1 : -1;
     }
-const dateA = new Date(a.duedate_c);
-    const dateB = new Date(b.duedate_c);
+const dateA = new Date(a.due_date_c);
+    const dateB = new Date(b.due_date_c);
     if (!dateA || isNaN(dateA.getTime())) return 1;
     if (!dateB || isNaN(dateB.getTime())) return -1;
     return dateA - dateB;
@@ -213,7 +213,7 @@ const dateA = new Date(a.duedate_c);
             <TaskItem
 key={task.Id}
               task={task}
-              crop={crops.find(c => c.Id === (task.crop_c?.Id || task.crop_c))}
+crop={crops.find(c => c.Id === (task.crop_id_c?.Id || task.crop_id_c))}
               onToggle={handleToggleComplete}
               onEdit={handleEdit}
               onDelete={handleDelete}
@@ -239,8 +239,8 @@ key={task.Id}
 
           <SelectField
             label="Related Crop"
-            value={formData.crop_c}
-            onChange={(e) => setFormData({ ...formData, crop_c: parseInt(e.target.value) || "" })}
+value={formData.crop_id_c}
+            onChange={(e) => setFormData({ ...formData, crop_id_c: parseInt(e.target.value) || "" })}
           >
             <option value="">None (General task)</option>
             {crops.map(crop => (
@@ -268,8 +268,8 @@ key={task.Id}
               label="Due Date"
               type="date"
               required
-              value={formData.duedate_c}
-              onChange={(e) => setFormData({ ...formData, duedate_c: e.target.value })}
+value={formData.due_date_c}
+              onChange={(e) => setFormData({ ...formData, due_date_c: e.target.value })}
             />
             <SelectField
               label="Priority"

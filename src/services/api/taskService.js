@@ -10,15 +10,15 @@ const taskService = {
       });
 
       const params = {
-        fields: [
+fields: [
           { field: { Name: "title_c" } },
           { field: { Name: "description_c" } },
-          { field: { Name: "duedate_c" } },
+          { field: { Name: "due_date_c" } },
           { field: { Name: "priority_c" } },
           { field: { Name: "completed_c" } },
           { field: { Name: "completedat_c" } },
-          { field: { Name: "farm_c" }, referenceField: { field: { Name: "name_c" } } },
-          { field: { Name: "crop_c" }, referenceField: { field: { Name: "name_c" } } }
+          { field: { Name: "farm_id_c" } },
+          { field: { Name: "crop_id_c" }, referenceField: { field: { Name: "Name" } } }
         ],
         orderBy: [{ fieldName: "Id", sorttype: "DESC" }]
       };
@@ -48,15 +48,15 @@ const taskService = {
       });
 
       const params = {
-        fields: [
+fields: [
           { field: { Name: "title_c" } },
           { field: { Name: "description_c" } },
-          { field: { Name: "duedate_c" } },
+          { field: { Name: "due_date_c" } },
           { field: { Name: "priority_c" } },
           { field: { Name: "completed_c" } },
           { field: { Name: "completedat_c" } },
-          { field: { Name: "farm_c" }, referenceField: { field: { Name: "name_c" } } },
-          { field: { Name: "crop_c" }, referenceField: { field: { Name: "name_c" } } }
+          { field: { Name: "farm_id_c" } },
+          { field: { Name: "crop_id_c" }, referenceField: { field: { Name: "Name" } } }
         ]
       };
 
@@ -84,14 +84,14 @@ const taskService = {
         apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
       });
 
-      const payload = {
+const payload = {
         records: [{
           title_c: taskData.title_c,
           description_c: taskData.description_c || "",
-          duedate_c: taskData.duedate_c,
+          due_date_c: taskData.due_date_c,
           priority_c: taskData.priority_c,
-          farm_c: parseInt(taskData.farm_c),
-          ...(taskData.crop_c && { crop_c: parseInt(taskData.crop_c) })
+          farm_id_c: parseInt(taskData.farm_id_c),
+          ...(taskData.crop_id_c && { crop_id_c: parseInt(taskData.crop_id_c) })
         }]
       };
 
@@ -136,15 +136,15 @@ const taskService = {
         apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
       });
 
-      const payload = {
+const payload = {
         records: [{
           Id: parseInt(id),
           title_c: taskData.title_c,
           description_c: taskData.description_c || "",
-          duedate_c: taskData.duedate_c,
+          due_date_c: taskData.due_date_c,
           priority_c: taskData.priority_c,
-          farm_c: parseInt(taskData.farm_c),
-          ...(taskData.crop_c && { crop_c: parseInt(taskData.crop_c) })
+          farm_id_c: parseInt(taskData.farm_id_c),
+          ...(taskData.crop_id_c && { crop_id_c: parseInt(taskData.crop_id_c) })
         }]
       };
 
