@@ -16,10 +16,11 @@ function Farms() {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingFarm, setEditingFarm] = useState(null);
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     name_c: "",
     location_c: "",
-    size_c: ""
+    size_c: "",
+    soil_type_c: ""
   });
 
   useEffect(() => {
@@ -42,17 +43,19 @@ function Farms() {
   const handleOpenModal = (farm = null) => {
     if (farm) {
       setEditingFarm(farm);
-      setFormData({
+setFormData({
         name_c: farm.name_c || "",
         location_c: farm.location_c || "",
-        size_c: farm.size_c || ""
+        size_c: farm.size_c || "",
+        soil_type_c: farm.soil_type_c || ""
       });
     } else {
       setEditingFarm(null);
-      setFormData({
+setFormData({
         name_c: "",
         location_c: "",
-        size_c: ""
+        size_c: "",
+        soil_type_c: ""
       });
     }
     setIsModalOpen(true);
@@ -61,17 +64,18 @@ function Farms() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingFarm(null);
-    setFormData({
+setFormData({
       name_c: "",
       location_c: "",
-      size_c: ""
+      size_c: "",
+      soil_type_c: ""
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!formData.name_c || !formData.location_c || !formData.size_c) {
+if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.soil_type_c) {
       toast.error("All fields are required");
       return;
     }
@@ -177,7 +181,15 @@ function Farms() {
                     <ApperIcon name="Maximize" className="w-4 h-4 mr-2" />
                     <span className="text-sm">{farm.size_c} acres</span>
                   </div>
-                </div>
+</div>
+                <FormField
+                  label="Soil Type"
+                  name="soil_type_c"
+                  value={formData.soil_type_c}
+                  onChange={handleInputChange}
+                  placeholder="e.g., Clay, Sandy, Loamy"
+                  required
+                />
                 <div className="flex space-x-2">
                   <Button
                     variant="outline"

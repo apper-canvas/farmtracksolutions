@@ -13,7 +13,8 @@ const farmService = {
         fields: [
           { field: { Name: "name_c" } },
           { field: { Name: "location_c" } },
-          { field: { Name: "size_c" } }
+{ field: { Name: "size_c" } },
+          { field: { Name: "soil_type_c" } }
         ],
         orderBy: [{ fieldName: "Id", sorttype: "DESC" }]
       };
@@ -46,7 +47,8 @@ const farmService = {
         fields: [
           { field: { Name: "name_c" } },
           { field: { Name: "location_c" } },
-          { field: { Name: "size_c" } }
+{ field: { Name: "size_c" } },
+          { field: { Name: "soil_type_c" } }
         ]
       };
 
@@ -77,8 +79,9 @@ const farmService = {
       const payload = {
         records: [{
           name_c: farmData.name_c,
-          location_c: farmData.location_c,
-          size_c: parseFloat(farmData.size_c)
+location_c: farmData.location_c,
+          size_c: parseFloat(farmData.size_c),
+          soil_type_c: farmData.soil_type_c
         }]
       };
 
@@ -126,9 +129,10 @@ const farmService = {
       const payload = {
         records: [{
           Id: parseInt(id),
-          name_c: farmData.name_c,
+name_c: farmData.name_c,
           location_c: farmData.location_c,
-          size_c: parseFloat(farmData.size_c)
+          size_c: parseFloat(farmData.size_c),
+          soil_type_c: farmData.soil_type_c
         }]
       };
 
