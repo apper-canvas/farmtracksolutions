@@ -18,6 +18,8 @@ function Farms() {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingFarm, setEditingFarm] = useState(null);
+  const [generatingWeather, setGeneratingWeather] = useState(false);
+  const [generatingFarmId, setGeneratingFarmId] = useState(null);
 const [formData, setFormData] = useState({
     name_c: "",
     location_c: "",
@@ -128,8 +130,59 @@ if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.so
       ...prev,
       [name]: value
     }));
-  };
+};
 
+  const handleGenerateWeather = async (farm) => {
+    if (!farm.location_c) {
+      toast.error("Farm location is required to generate weather summary");
+      return;
+    }
+
+    setGeneratingWeather(true);
+    setGeneratingFarmId(farm.Id);
+
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+
+      const result = await apperClient.functions.invoke(
+        import.meta.env.VITE_GENERATE_FARM_WEATHER,
+        {
+          body: JSON.stringify({
+            location: farm.location_c,
+            name: farm.name_c,
+            farmType: farm.farm_type_c,
+            soilType: farm.soil_type_c,
+            size: farm.size_c
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (result.success && result.weatherSummary) {
+        await farmService.update(farm.Id, {
+          ...farm,
+          weather_summary_c: result.weatherSummary
+        });
+        toast.success("Weather summary generated successfully");
+        loadFarms();
+      } else {
+        console.info(`apper_info: Got an error in Edge Function: ${import.meta.env.VITE_GENERATE_FARM_WEATHER}. The response body is: ${JSON.stringify(result)}.`);
+        toast.error(result.message || "Failed to generate weather summary");
+      }
+    } catch (error) {
+      console.info(`apper_info: Got this error in Edge Function: ${import.meta.env.VITE_GENERATE_FARM_WEATHER}. The error is: ${error.message}`);
+      toast.error("Failed to generate weather summary");
+    } finally {
+      setGeneratingWeather(false);
+      setGeneratingFarmId(null);
+    }
+  };
   if (loading) return <Loading />;
   if (error) return <Error message={error} onRetry={loadFarms} />;
 
@@ -191,35 +244,55 @@ if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.so
                     <ApperIcon name="Maximize" className="w-4 h-4 mr-2" />
                     <span className="text-sm">{farm.size_c} acres</span>
 </div>
-                  <div className="h-4"></div>
-</div>
-                <FormField
-                  label="Soil Type"
-                  name="soil_type_c"
-                  value={formData.soil_type_c}
-                  onChange={handleInputChange}
-                  placeholder="e.g., Clay, Sandy, Loamy"
-                  required
-                />
-                <div className="flex space-x-2">
+                  <div className="flex items-center text-gray-600">
+                    <ApperIcon name="Mountain" className="w-4 h-4 mr-2" />
+                    <span className="text-sm">{farm.soil_type_c || 'N/A'}</span>
+                  </div>
+                  <div className="flex items-center text-gray-600">
+                    <ApperIcon name="Sprout" className="w-4 h-4 mr-2" />
+                    <span className="text-sm">{farm.farm_type_c || 'N/A'}</span>
+                  </div>
+                </div>
+                <div className="space-y-2">
                   <Button
                     variant="outline"
                     size="small"
-                    onClick={() => handleOpenModal(farm)}
-                    className="flex-1"
+                    onClick={() => handleGenerateWeather(farm)}
+                    disabled={!farm.location_c || (generatingWeather && generatingFarmId === farm.Id)}
+                    className="w-full"
                   >
-                    <ApperIcon name="Edit" className="w-4 h-4 mr-1" />
-                    Edit
+                    {generatingWeather && generatingFarmId === farm.Id ? (
+                      <>
+                        <ApperIcon name="Loader2" className="w-4 h-4 mr-2 animate-spin" />
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <ApperIcon name="Cloud" className="w-4 h-4 mr-2" />
+                        Generate Weather
+                      </>
+                    )}
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="small"
-                    onClick={() => handleDelete(farm.Id)}
-                    className="flex-1 text-error hover:bg-error hover:text-white border-error"
-                  >
-                    <ApperIcon name="Trash2" className="w-4 h-4 mr-1" />
-                    Delete
-                  </Button>
+<div className="flex space-x-2">
+                    <Button
+                      variant="outline"
+                      size="small"
+                      onClick={() => handleOpenModal(farm)}
+                      className="flex-1"
+                    >
+                      <ApperIcon name="Edit" className="w-4 h-4 mr-1" />
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="small"
+                      onClick={() => handleDelete(farm.Id)}
+                      className="flex-1 text-error hover:bg-error hover:text-white border-error"
+                    >
+                      <ApperIcon name="Trash2" className="w-4 h-4 mr-1" />
+                      Delete
+                    </Button>
+                  </div>
                 </div>
               </Card>
             </motion.div>
