@@ -22,8 +22,9 @@ const [formData, setFormData] = useState({
     name_c: "",
     location_c: "",
     size_c: "",
-soil_type_c: "",
-    farm_type_c: ""
+    soil_type_c: "",
+    farm_type_c: "",
+    weather_summary_c: ""
   });
 
   useEffect(() => {
@@ -50,8 +51,9 @@ setFormData({
         name_c: farm.name_c || "",
         location_c: farm.location_c || "",
         size_c: farm.size_c || "",
-soil_type_c: farm.soil_type_c || "",
-        farm_type_c: farm.farm_type_c || ""
+        soil_type_c: farm.soil_type_c || "",
+        farm_type_c: farm.farm_type_c || "",
+        weather_summary_c: farm.weather_summary_c || ""
       });
     } else {
       setEditingFarm(null);
@@ -59,8 +61,9 @@ setFormData({
         name_c: "",
         location_c: "",
         size_c: "",
-soil_type_c: "",
-        farm_type_c: ""
+        soil_type_c: "",
+        farm_type_c: "",
+        weather_summary_c: ""
       });
     }
     setIsModalOpen(true);
@@ -73,15 +76,16 @@ setFormData({
       name_c: "",
       location_c: "",
       size_c: "",
-soil_type_c: "",
-      farm_type_c: ""
+      soil_type_c: "",
+      farm_type_c: "",
+      weather_summary_c: ""
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.soil_type_c || !formData.farm_type_c) {
+if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.soil_type_c || !formData.farm_type_c || !formData.weather_summary_c) {
       toast.error("All fields are required");
       return;
     }
@@ -278,9 +282,18 @@ if (!formData.name_c || !formData.location_c || !formData.size_c || !formData.so
             <option value="Crop Farm">Crop Farm</option>
             <option value="Livestock Farm">Livestock Farm</option>
             <option value="Mixed Farm">Mixed Farm</option>
-            <option value="Orchard">Orchard</option>
+<option value="Orchard">Orchard</option>
             <option value="Vineyard">Vineyard</option>
           </SelectField>
+          <FormField
+            label="Weather Summary"
+            name="weather_summary_c"
+            value={formData.weather_summary_c}
+            onChange={handleInputChange}
+            placeholder="Enter weather summary..."
+            multiline
+            rows={4}
+          />
           <div className="flex space-x-3 pt-4">
             <Button type="submit" className="flex-1">
               {editingFarm ? "Update Farm" : "Create Farm"}
